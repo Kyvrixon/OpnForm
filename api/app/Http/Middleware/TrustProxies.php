@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Middleware;
-
 use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
-
 class TrustProxies extends Middleware
 {
     /**
@@ -25,4 +22,17 @@ class TrustProxies extends Middleware
         Request::HEADER_X_FORWARDED_PORT |
         Request::HEADER_X_FORWARDED_PROTO |
         Request::HEADER_X_FORWARDED_AWS_ELB;
+
+    public function __construct(\Illuminate\Contracts\Config\Repository $config)
+    {
+        parent::__construct($config);
+        
+        $trustedProxies = config('app.trusted_proxies');
+        
+        if ($trustedProxies) {
+            $this->proxies = is_string($trustedProxies) && str_contains($trustedProxies, ',')
+                ? array_map('trim', explode(',', $trustedProxies))
+                : $trustedProxies;
+        }
+    }
 }

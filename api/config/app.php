@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'OpnForm'),
 
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Version
