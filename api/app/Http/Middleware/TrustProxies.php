@@ -23,10 +23,8 @@ class TrustProxies extends Middleware
         Request::HEADER_X_FORWARDED_PROTO |
         Request::HEADER_X_FORWARDED_AWS_ELB;
 
-    public function __construct(\Illuminate\Contracts\Config\Repository $config)
+    public function __construct()
     {
-        parent::__construct($config);
-        
         $trustedProxies = config('app.trusted_proxies');
         
         if ($trustedProxies) {
